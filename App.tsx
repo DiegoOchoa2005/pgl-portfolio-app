@@ -7,10 +7,12 @@ import {
   Text,
   View,
   Image,
+  FlatList,
 } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { Card } from "./components/Card";
-import BoxData from "./components/BoxData";
+import BoxData from "./components/Box";
+import { boxes } from "./data/BoxData";
 
 export default function App() {
   const [displayMyQR, setDisplayMyQR] = useState(true);
@@ -64,9 +66,13 @@ export default function App() {
             >
               cosas que me gustan mucho:
             </Text>
-            <ScrollView style={{ padding: 10 }}>
-              <BoxData />
-            </ScrollView>
+            <FlatList
+              data={boxes}
+              renderItem={({ item }) => (
+                <BoxData description={item.description} image={item.image} />
+              )}
+              keyExtractor={(_item, index: number) => `${index}`}
+            />
           </View>
         </View>
       ) : (
