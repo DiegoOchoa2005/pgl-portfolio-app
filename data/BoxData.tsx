@@ -1,4 +1,4 @@
-import { BoxProps } from "../components/BoxData";
+import { BoxProps } from "../components/Box";
 
 export const boxes: BoxProps[] = [
   {

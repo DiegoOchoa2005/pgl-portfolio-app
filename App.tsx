@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { Card } from "./components/Card";
-import BoxData from "./components/BoxData";
+import BoxData from "./components/Box";
 import { boxes } from "./data/BoxData";
 
 export default function App() {
