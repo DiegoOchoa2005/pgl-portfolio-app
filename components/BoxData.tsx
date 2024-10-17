@@ -1,30 +1,73 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import {
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { COLORS } from "../styles/Color";
 
-const BoxData = () => {
+export type BoxProps = {
+  description: string;
+  image: ImageSourcePropType;
+};
+
+const BoxData = ({ description, image }: BoxProps) => {
   return (
-    <>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>Salir a pasear</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>Senderismo</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>Ir a la playita</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>Domingos de misa</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>La guitarrita</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>El monte con lluvia</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>Viajar</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>Música variadita</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>Anime</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>Ducharme</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>Videojuegos</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>
-        Ir de cenar romántica
-      </Text>
-    </>
+    <View style={styles.container}>
+      <View style={styles.boxInfo}>
+        <View style={styles.boxTextContainer}>
+          <Text style={styles.boxText}>{description}</Text>
+        </View>
+        <View style={styles.boxImage}>
+          <Image source={image} style={styles.img} />
+        </View>
+      </View>
+    </View>
   );
 };
 
 export default BoxData;
 
 const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    justifyContent: "space-between",
+    borderColor: COLORS.borderPrimary,
+    borderStyle: "dashed",
+    borderWidth: 1,
+    margin: 4,
+    marginHorizontal: 8,
+    backgroundColor: COLORS.backgroundColor,
+  },
+  boxTextContainer: {
+    padding: 10,
+    marginLeft: "auto",
+    maxWidth: 250,
+  },
+  boxText: {
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  boxInfo: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    backgroundColor: COLORS.backgroundColor,
+    padding: 10,
+  },
+  boxImage: {
+    borderRadius: 50,
+    marginLeft: "auto",
+  },
+
+  img: {
+    width: 70,
+    height: 70,
+    borderRadius: 10,
+  },
   cosasQmeGustanMuxoEstails: {
     borderColor: "black",
     borderWidth: 1,
