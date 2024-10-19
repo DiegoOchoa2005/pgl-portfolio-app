@@ -15,11 +15,23 @@ import { Card } from "./components/Card";
 import Box from "./components/Box";
 import { boxes } from "./data/BoxData";
 import { COLORS } from "./styles/Color";
+import { Audio } from "expo-av";
 const screenWidth = Dimensions.get("window").width;
 const screenHeigth = Dimensions.get("window").height;
 export default function App() {
   const [displayQR, setDisplayMyQR] = useState(false);
   const handleQR = () => setDisplayMyQR(!displayQR);
+  const playSound = async () => {
+    try {
+      const { sound } = await Audio.Sound.createAsync(
+        require("./sounds/cachetada.mp3")
+      );
+
+      await sound.playAsync(); // Reproducir el sonido
+    } catch (error) {
+      console.error("Error al reproducir el sonido:", error);
+    }
+  };
   return (
     <View style={styles.container}>
       <ExpoStatusBar style="auto" />
@@ -46,6 +58,7 @@ export default function App() {
                 value="https://github.com/DiegoOchoa2005/pgl-portfolio-app"
               />
             </View>
+            <View style={styles.cuteDraw}></View>
           </View>
         </View>
       ) : (
@@ -156,4 +169,5 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     alignItems: "center",
   },
+  cuteDraw: {},
 });
