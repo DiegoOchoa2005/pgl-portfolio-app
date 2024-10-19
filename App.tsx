@@ -18,8 +18,8 @@ import { COLORS } from "./styles/Color";
 const screenWidth = Dimensions.get("window").width;
 const screenHeigth = Dimensions.get("window").height;
 export default function App() {
-  const [displayMyQR, setDisplayMyQR] = useState(true);
-
+  const [displayQR, setDisplayMyQR] = useState(true);
+  const handleQR = () => setDisplayMyQR(!displayQR);
   return (
     <View style={styles.container}>
       <ExpoStatusBar style="auto" />
@@ -32,15 +32,12 @@ export default function App() {
           >
             <Text style={styles.pressableText}>Mi info</Text>
           </Pressable>
-          <Pressable
-            style={styles.pressableButton}
-            onPress={() => setDisplayMyQR(false)}
-          >
+          <Pressable style={styles.pressableButton} onPress={() => handleQR()}>
             <Text style={styles.pressableText}>Mi Repo</Text>
           </Pressable>
         </View>
       </View>
-      {displayMyQR ? (
+      {displayQR ? (
         <View style={styles.body}>
           <View style={styles.bodyCard}>
             <Card
