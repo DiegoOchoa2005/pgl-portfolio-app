@@ -1,71 +1,59 @@
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { useState } from "react";
 import {
   Button,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   View,
-  Image,
   FlatList,
+  Dimensions,
+  StatusBar,
 } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { Card } from "./components/Card";
 import Box from "./components/Box";
 import { boxes } from "./data/BoxData";
-
+import { COLORS } from "./styles/Color";
+const screenWidth = Dimensions.get("window").width;
+const screenHeigth = Dimensions.get("window").height;
 export default function App() {
   const [displayMyQR, setDisplayMyQR] = useState(true);
+
   return (
     <View style={styles.container}>
-      <View style={styles.topContainer}>
-        <Text style={styles.firsttoprowContainer}>My Portfolio App</Text>
-        <View style={styles.rowTopSecondContainer}>
+      <ExpoStatusBar style="auto" />
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>My Portfolio App</Text>
+        <View style={styles.headerButtons}>
           <Pressable
-            style={styles.buttonruta}
+            style={styles.pressableButton}
             onPress={() => setDisplayMyQR(true)}
           >
-            <Text
-              style={{
-                ...{
-                  color: "white",
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                },
-                ...styles.shadoxboxing,
-              }}
-            >
-              Mi info
-            </Text>
+            <Text style={styles.pressableText}>Mi info</Text>
           </Pressable>
-          <Button
+          <Pressable
+            style={styles.pressableButton}
             onPress={() => setDisplayMyQR(false)}
-            title="Mi Repo"
-            color="light-gray"
-            accessibilityLabel="Un botón pal QR"
-          />
+          >
+            <Text style={styles.pressableText}>Mi Repo</Text>
+          </Pressable>
         </View>
       </View>
       {displayMyQR ? (
-        <View style={styles.bodystails}>
-          <Card
-            avatar={require("./assets/SofyanAmrabat.jpg")}
-            title="Descripción sobre mí!"
-            description="Soy profe y me gusta mi trabajo aunque a veces me de por enrevesar
+        <View style={styles.body}>
+          <View style={styles.bodyCard}>
+            <Card
+              avatar={require("./assets/SofyanAmrabat.jpg")}
+              title="Descripción sobre mí!"
+              description="Soy profe y me gusta mi trabajo aunque a veces me de por enrevesar
               prácticas para mis queridos alumnos"
-          />
-          <View>
-            <Text
-              style={{
-                color: "beriblak",
-                fontWeight: "900",
-                textTransform: "capitalize",
-                fontSize: 20,
-                textAlign: "center",
-              }}
-            >
-              cosas que me gustan mucho:
-            </Text>
+            />
+          </View>
+          <View style={styles.boxTitle}>
+            <Text style={styles.boxTitleInfo}>cosas que me gustan mucho:</Text>
+          </View>
+          <View style={styles.boxList}>
             <FlatList
               data={boxes}
               renderItem={({ item }) => (
@@ -76,9 +64,14 @@ export default function App() {
           </View>
         </View>
       ) : (
-        <View style={styles.bodystails}>
-          <View style={styles.CentrarcodigoQR}>
-            <QRCode value="https://github.com/adhernea" />
+        <View style={styles.body}>
+          <View style={styles.repoContainer}>
+            <View style={styles.qrCode}>
+              <QRCode
+                size={180}
+                value="https://github.com/DiegoOchoa2005/pgl-portfolio-app"
+              />
+            </View>
           </View>
         </View>
       )}
@@ -93,56 +86,77 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  topContainer: {
-    height: "15%",
-    paddingTop: 50,
-    width: "100%",
+  header: {
+    display: "flex",
+    width: screenWidth,
+    height: 65 + (StatusBar.currentHeight as number),
   },
-  firsttoprowContainer: {
+  headerTitle: {
     backgroundColor: "gray",
     textAlign: "center",
     fontWeight: "bold",
-    textAlignVertical: "center",
-    fontSize: 30,
+    fontSize: 28,
+    padding: 8,
   },
-  rowTopSecondContainer: {
+  headerButtons: {
+    display: "flex",
     flexDirection: "row",
     backgroundColor: "darkgray",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonruta: {
-    width: "50%",
-  },
-  bodystails: {
-    width: "100%",
-    borderWidth: 2,
-    borderColor: "black",
-    alignItems: "center",
     justifyContent: "space-between",
-    height: "85%",
+    padding: 5,
   },
-  avatar: {
-    height: 90,
-    width: 90,
-    borderRadius: 100,
+  pressableButton: {
+    padding: 5,
+    borderRadius: 5,
+    marginHorizontal: "auto",
+    backgroundColor: COLORS.backgroundColor,
   },
-  CentrarcodigoQR: {
+  pressableText: {
+    color: "white",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+  },
+  body: {
+    display: "flex",
+    flexDirection: "column",
     justifyContent: "center",
-    borderWidth: 1,
-    width: "100%",
-    height: "100%",
     alignItems: "center",
+    width: screenWidth,
+    height: screenHeigth - 130,
+    maxWidth: screenWidth,
+    maxHeight: screenHeigth - 130,
   },
-  shadoxboxing: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 7,
-    },
-    shadowOpacity: 0.43,
-    shadowRadius: 9.51,
 
-    elevation: 15,
+  bodyCard: {
+    marginTop: 25,
+  },
+  boxList: {
+    width: 380,
+    height: screenHeigth - 386,
+    maxWidth: 380,
+    maxHeight: screenHeigth - 386,
+  },
+  boxTitle: {
+    backgroundColor: "cyan",
+    width: 300,
+    maxWidth: 300,
+    padding: 10,
+    marginBottom: 5,
+  },
+  boxTitleInfo: {
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    fontSize: 18,
+    textAlign: "center",
+  },
+  repoContainer: {
+    display: "flex",
+    backgroundColor: "blue",
+    height: "100%",
+    width: "100%",
+  },
+  qrCode: {
+    paddingTop: 30,
+    alignItems: "center",
   },
 });
