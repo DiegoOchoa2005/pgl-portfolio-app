@@ -48,13 +48,13 @@ export default function App() {
       </View>
       {displayMyQR ? (
         <View style={styles.bodystails}>
-          <View>
-            <Card
-              avatar={require("./assets/SofyanAmrabat.jpg")}
-              title="Descripción sobre mí!"
-              description="Soy profe y me gusta mi trabajo aunque a veces me de por enrevesar
+          <Card
+            avatar={require("./assets/SofyanAmrabat.jpg")}
+            title="Descripción sobre mí!"
+            description="Soy profe y me gusta mi trabajo aunque a veces me de por enrevesar
               prácticas para mis queridos alumnos"
-            />
+          />
+          <View>
             <Text
               style={{
                 color: "beriblak",
