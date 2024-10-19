@@ -18,7 +18,7 @@ import { COLORS } from "./styles/Color";
 const screenWidth = Dimensions.get("window").width;
 const screenHeigth = Dimensions.get("window").height;
 export default function App() {
-  const [displayQR, setDisplayMyQR] = useState(true);
+  const [displayQR, setDisplayMyQR] = useState(false);
   const handleQR = () => setDisplayMyQR(!displayQR);
   return (
     <View style={styles.container}>
@@ -28,7 +28,7 @@ export default function App() {
         <View style={styles.headerButtons}>
           <Pressable
             style={styles.pressableButton}
-            onPress={() => setDisplayMyQR(true)}
+            onPress={() => setDisplayMyQR(false)}
           >
             <Text style={styles.pressableText}>Mi info</Text>
           </Pressable>
@@ -38,6 +38,17 @@ export default function App() {
         </View>
       </View>
       {displayQR ? (
+        <View style={styles.body}>
+          <View style={styles.repoContainer}>
+            <View style={styles.qrCode}>
+              <QRCode
+                size={180}
+                value="https://github.com/DiegoOchoa2005/pgl-portfolio-app"
+              />
+            </View>
+          </View>
+        </View>
+      ) : (
         <View style={styles.body}>
           <View style={styles.bodyCard}>
             <Card
@@ -58,17 +69,6 @@ export default function App() {
               )}
               keyExtractor={(_item, index: number) => `${index}`}
             />
-          </View>
-        </View>
-      ) : (
-        <View style={styles.body}>
-          <View style={styles.repoContainer}>
-            <View style={styles.qrCode}>
-              <QRCode
-                size={180}
-                value="https://github.com/DiegoOchoa2005/pgl-portfolio-app"
-              />
-            </View>
           </View>
         </View>
       )}
