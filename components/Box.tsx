@@ -13,7 +13,7 @@ export type BoxProps = {
   image: ImageSourcePropType;
 };
 
-const BoxData = ({ description, image }: BoxProps) => {
+const Box = ({ description, image }: BoxProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.boxInfo}>
@@ -28,7 +28,7 @@ const BoxData = ({ description, image }: BoxProps) => {
   );
 };
 
-export default BoxData;
+export default Box;
 
 const styles = StyleSheet.create({
   container: {
