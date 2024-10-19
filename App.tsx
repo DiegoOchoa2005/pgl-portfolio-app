@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { Card } from "./components/Card";
-import BoxData from "./components/Box";
+import Box from "./components/Box";
 import { boxes } from "./data/BoxData";
 
 export default function App() {
@@ -69,7 +69,7 @@ export default function App() {
             <FlatList
               data={boxes}
               renderItem={({ item }) => (
-                <BoxData description={item.description} image={item.image} />
+                <Box description={item.description} image={item.image} />
               )}
               keyExtractor={(_item, index: number) => `${index}`}
             />
