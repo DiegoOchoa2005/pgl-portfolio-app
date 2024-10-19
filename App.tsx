@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { Card } from "./components/Card";
-import BoxData from "./components/Box";
+import Box from "./components/Box";
 import { boxes } from "./data/BoxData";
 
 export default function App() {
@@ -48,13 +48,13 @@ export default function App() {
       </View>
       {displayMyQR ? (
         <View style={styles.bodystails}>
-          <View>
-            <Card
-              avatar={require("./assets/SofyanAmrabat.jpg")}
-              title="Descripción sobre mí!"
-              description="Soy profe y me gusta mi trabajo aunque a veces me de por enrevesar
+          <Card
+            avatar={require("./assets/SofyanAmrabat.jpg")}
+            title="Descripción sobre mí!"
+            description="Soy profe y me gusta mi trabajo aunque a veces me de por enrevesar
               prácticas para mis queridos alumnos"
-            />
+          />
+          <View>
             <Text
               style={{
                 color: "beriblak",
@@ -69,7 +69,7 @@ export default function App() {
             <FlatList
               data={boxes}
               renderItem={({ item }) => (
-                <BoxData description={item.description} image={item.image} />
+                <Box description={item.description} image={item.image} />
               )}
               keyExtractor={(_item, index: number) => `${index}`}
             />
