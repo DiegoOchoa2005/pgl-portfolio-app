@@ -138,9 +138,9 @@ const styles = StyleSheet.create({
   },
   boxTitle: {
     backgroundColor: "cyan",
-    width: 300,
-    maxWidth: 300,
-    padding: 10,
+    width: 310,
+    maxWidth: 310,
+    padding: 5,
     marginBottom: 5,
   },
   boxTitleInfo: {
