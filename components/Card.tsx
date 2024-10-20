@@ -11,17 +11,34 @@ export type CardProps = {
   avatar: ImageSourcePropType;
   title: string;
   description: string;
+  borderColor?: string;
+  backgroundColor?: string;
+  backgroundColorSecondary?: string;
+  textColorPrimary?: string;
+  textColorSecondary?: string;
 };
 
-export const Card = ({ avatar, title, description }: CardProps) => {
+export const Card = ({
+  avatar,
+  title,
+  description,
+  backgroundColor,
+  textColorPrimary,
+  textColorSecondary,
+  borderColor,
+}: CardProps) => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.cardAvatar}>
         <Image style={styles.avatar} source={avatar} />
       </View>
-      <View style={styles.cardInfo}>
-        <Text style={styles.cardTitle}>{title}</Text>
-        <Text style={styles.cardDescription}>{description}</Text>
+      <View style={[styles.cardInfo, { backgroundColor, borderColor }]}>
+        <Text style={[styles.cardTitle, { color: textColorPrimary }]}>
+          {title}
+        </Text>
+        <Text style={[styles.cardDescription, { color: textColorSecondary }]}>
+          {description}
+        </Text>
       </View>
     </View>
   );
@@ -38,7 +55,8 @@ const styles = StyleSheet.create({
   cardInfo: {
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "lightgray",
+    borderStyle: "dashed",
+    borderWidth: 1,
     margin: 10,
     padding: 5,
     borderRadius: 10,
