@@ -145,7 +145,7 @@ const getStyles = (colorScheme: string) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: "#fff",
+      backgroundColor: getTheme.backgroundPrimary,
       alignItems: "center",
       justifyContent: "center",
     },
@@ -155,7 +155,8 @@ const getStyles = (colorScheme: string) => {
       height: 65 + (StatusBar.currentHeight as number),
     },
     headerTitle: {
-      backgroundColor: "gray",
+      backgroundColor: getTheme.backgroundSecondary,
+      color: getTheme.textPrimary,
       textAlign: "center",
       fontWeight: "bold",
       fontSize: 28,
@@ -164,7 +165,7 @@ const getStyles = (colorScheme: string) => {
     headerButtons: {
       display: "flex",
       flexDirection: "row",
-      backgroundColor: "darkgray",
+      backgroundColor: getTheme.backgroundTertiary,
       justifyContent: "space-between",
       padding: 5,
     },
@@ -172,10 +173,10 @@ const getStyles = (colorScheme: string) => {
       padding: 5,
       borderRadius: 5,
       marginHorizontal: "auto",
-      backgroundColor: getTheme.backgroundPrimary,
+      backgroundColor: getTheme.backgroundSecondary,
     },
     pressableText: {
-      color: "white",
+      color: getTheme.textPrimary,
       fontWeight: "bold",
       textTransform: "uppercase",
     },
@@ -200,7 +201,11 @@ const getStyles = (colorScheme: string) => {
       maxHeight: screenHeigth - 386,
     },
     boxTitle: {
-      backgroundColor: "cyan",
+      backgroundColor: getTheme.backgroundSecondary,
+      borderRadius: 20,
+      borderColor: getTheme.borderColor,
+      borderWidth: 1,
+      borderStyle: "dashed",
       width: 310,
       maxWidth: 310,
       padding: 5,
@@ -214,7 +219,7 @@ const getStyles = (colorScheme: string) => {
     },
     repoContainer: {
       display: "flex",
-      backgroundColor: "pink",
+      backgroundColor: getTheme.backgroundPrimary,
       height: screenHeigth,
       width: screenWidth,
       zIndex: -1,
