@@ -11,16 +11,21 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
+  useColorScheme,
 } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { Card } from "./components/Card";
 import Box from "./components/Box";
 import { boxes } from "./data/BoxData";
-import { COLORS } from "./styles/Color";
+import { COLORS_DARK, COLORS_LIGHT } from "./styles/Color";
 import { Audio } from "expo-av";
 const screenWidth = Dimensions.get("window").width;
 const screenHeigth = Dimensions.get("window").height;
+
 export default function App() {
+  const currentColorScheme = useColorScheme();
+  const [colorScheme, setColorScheme] = useState(currentColorScheme);
+  const [styles, setStyles] = useState(getStyles(colorScheme || "light"));
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [displayQR, setDisplayMyQR] = useState(false);
   const [originalImage, setOriginalImage] = useState(true);
@@ -28,6 +33,7 @@ export default function App() {
     require("./assets/img/sandynormal.png")
   );
   const handleQR = () => setDisplayMyQR(!displayQR);
+
   const handleSandyImage = () => {
     if (originalImage) {
       playSound();
@@ -37,6 +43,16 @@ export default function App() {
     }
     setOriginalImage(!originalImage);
   };
+
+  const toggleColorScheme = () => {
+    setColorScheme((prevColorScheme) =>
+      prevColorScheme === "light" ? "dark" : "light"
+    );
+  };
+
+  useEffect(() => {
+    setStyles(getStyles(colorScheme || "light"));
+  }, [colorScheme]);
 
   useEffect(() => {
     const loadSound = async () => {
@@ -124,93 +140,96 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  header: {
-    display: "flex",
-    width: screenWidth,
-    height: 65 + (StatusBar.currentHeight as number),
-  },
-  headerTitle: {
-    backgroundColor: "gray",
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 28,
-    padding: 8,
-  },
-  headerButtons: {
-    display: "flex",
-    flexDirection: "row",
-    backgroundColor: "darkgray",
-    justifyContent: "space-between",
-    padding: 5,
-  },
-  pressableButton: {
-    padding: 5,
-    borderRadius: 5,
-    marginHorizontal: "auto",
-    backgroundColor: COLORS.backgroundColor,
-  },
-  pressableText: {
-    color: "white",
-    fontWeight: "bold",
-    textTransform: "uppercase",
-  },
-  body: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: screenWidth,
-    height: screenHeigth - 130,
-    maxWidth: screenWidth,
-    maxHeight: screenHeigth - 130,
-  },
+const getStyles = (colorScheme: string) => {
+  const getTheme = colorScheme === "light" ? COLORS_LIGHT : COLORS_DARK;
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "#fff",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    header: {
+      display: "flex",
+      width: screenWidth,
+      height: 65 + (StatusBar.currentHeight as number),
+    },
+    headerTitle: {
+      backgroundColor: "gray",
+      textAlign: "center",
+      fontWeight: "bold",
+      fontSize: 28,
+      padding: 8,
+    },
+    headerButtons: {
+      display: "flex",
+      flexDirection: "row",
+      backgroundColor: "darkgray",
+      justifyContent: "space-between",
+      padding: 5,
+    },
+    pressableButton: {
+      padding: 5,
+      borderRadius: 5,
+      marginHorizontal: "auto",
+      backgroundColor: getTheme.backgroundPrimary,
+    },
+    pressableText: {
+      color: "white",
+      fontWeight: "bold",
+      textTransform: "uppercase",
+    },
+    body: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      width: screenWidth,
+      height: screenHeigth - 130,
+      maxWidth: screenWidth,
+      maxHeight: screenHeigth - 130,
+    },
 
-  bodyCard: {
-    marginTop: 25,
-  },
-  boxList: {
-    width: 380,
-    height: screenHeigth - 386,
-    maxWidth: 380,
-    maxHeight: screenHeigth - 386,
-  },
-  boxTitle: {
-    backgroundColor: "cyan",
-    width: 310,
-    maxWidth: 310,
-    padding: 5,
-    marginBottom: 5,
-  },
-  boxTitleInfo: {
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    fontSize: 18,
-    textAlign: "center",
-  },
-  repoContainer: {
-    display: "flex",
-    backgroundColor: "pink",
-    height: screenHeigth,
-    width: screenWidth,
-    zIndex: -1,
-  },
-  qrCode: {
-    alignItems: "center",
-    alignContent: "center",
-    marginTop: 80,
-  },
-  cuteDraw: {
-    alignItems: "center",
-  },
-  sandyImage: {
-    height: 520,
-    width: screenWidth,
-  },
-});
+    bodyCard: {
+      marginTop: 25,
+    },
+    boxList: {
+      width: 380,
+      height: screenHeigth - 386,
+      maxWidth: 380,
+      maxHeight: screenHeigth - 386,
+    },
+    boxTitle: {
+      backgroundColor: "cyan",
+      width: 310,
+      maxWidth: 310,
+      padding: 5,
+      marginBottom: 5,
+    },
+    boxTitleInfo: {
+      fontWeight: "bold",
+      textTransform: "uppercase",
+      fontSize: 18,
+      textAlign: "center",
+    },
+    repoContainer: {
+      display: "flex",
+      backgroundColor: "pink",
+      height: screenHeigth,
+      width: screenWidth,
+      zIndex: -1,
+    },
+    qrCode: {
+      alignItems: "center",
+      alignContent: "center",
+      marginTop: 80,
+    },
+    cuteDraw: {
+      alignItems: "center",
+    },
+    sandyImage: {
+      height: 520,
+      width: screenWidth,
+    },
+  });
+};
