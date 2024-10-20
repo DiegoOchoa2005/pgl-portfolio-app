@@ -130,7 +130,15 @@ export default function App() {
               title="Descripción sobre mí!"
               description="Soy profe y me gusta mi trabajo aunque a veces me de por enrevesar
               prácticas para mis queridos alumnos"
-              backgroundColor={styles.itemBackgroundSecondary.backgroundColor}
+              backgroundColorPrimary={
+                styles.itemBackgroundSecondary.backgroundColor
+              }
+              backgroundColorSecondary={
+                styles.itemBackgroundPrimary.backgroundColor
+              }
+              backgroundColorTertiary={
+                styles.itemBackgroundTertiary.backgroundColor
+              }
               borderColor={styles.itemBackgroundPrimary.borderColor}
               textColorPrimary={styles.itemFontPrimary.color}
               textColorSecondary={styles.itemFontSecondary.color}
