@@ -130,10 +130,10 @@ export default function App() {
               title="Descripción sobre mí!"
               description="Soy profe y me gusta mi trabajo aunque a veces me de por enrevesar
               prácticas para mis queridos alumnos"
-              backgroundColor={styles.cardBackground.backgroundColor}
-              borderColor={styles.cardBackground.borderColor}
-              textColorPrimary={styles.cardFontPrimary.color}
-              textColorSecondary={styles.cardFontSecondary.color}
+              backgroundColor={styles.itemBackgroundSecondary.backgroundColor}
+              borderColor={styles.itemBackgroundPrimary.borderColor}
+              textColorPrimary={styles.itemFontPrimary.color}
+              textColorSecondary={styles.itemFontSecondary.color}
             />
           </View>
           <View style={styles.boxTitle}>
@@ -143,7 +143,18 @@ export default function App() {
             <FlatList
               data={boxes}
               renderItem={({ item }) => (
-                <Box description={item.description} image={item.image} />
+                <Box
+                  description={item.description}
+                  image={item.image}
+                  borderColor={styles.itemBackgroundPrimary.borderColor}
+                  backgroundColorPrimary={
+                    styles.itemBackgroundSecondary.backgroundColor
+                  }
+                  textColorPrimary={styles.itemFontPrimary.color}
+                  backgroundColorSecondary={
+                    styles.itemBackgroundTertiary.backgroundColor
+                  }
+                />
               )}
               keyExtractor={(_item, index: number) => `${index}`}
             />
@@ -213,14 +224,20 @@ const getStyles = (colorScheme: string) => {
     bodyCard: {
       marginTop: 25,
     },
-    cardBackground: {
-      backgroundColor: getTheme.backgroundSecondary,
+    itemBackgroundPrimary: {
+      backgroundColor: getTheme.backgroundPrimary,
       borderColor: getTheme.borderColor,
     },
-    cardFontPrimary: {
+    itemBackgroundSecondary: {
+      backgroundColor: getTheme.backgroundSecondary,
+    },
+    itemBackgroundTertiary: {
+      backgroundColor: getTheme.backgroundTertiary,
+    },
+    itemFontPrimary: {
       color: getTheme.textPrimary,
     },
-    cardFontSecondary: {
+    itemFontSecondary: {
       color: getTheme.textSecondary,
     },
     boxList: {
@@ -241,6 +258,7 @@ const getStyles = (colorScheme: string) => {
       marginBottom: 5,
     },
     boxTitleInfo: {
+      color: getTheme.textSecondary,
       fontWeight: "bold",
       textTransform: "uppercase",
       fontSize: 18,
