@@ -1,5 +1,5 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Pressable,
@@ -9,17 +9,60 @@ import {
   FlatList,
   Dimensions,
   StatusBar,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { Card } from "./components/Card";
 import Box from "./components/Box";
 import { boxes } from "./data/BoxData";
 import { COLORS } from "./styles/Color";
+import { Audio } from "expo-av";
 const screenWidth = Dimensions.get("window").width;
 const screenHeigth = Dimensions.get("window").height;
 export default function App() {
+  const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [displayQR, setDisplayMyQR] = useState(false);
+  const [originalImage, setOriginalImage] = useState(true);
+  const [sandyImage, setImage] = useState(
+    require("./assets/img/sandynormal.png")
+  );
   const handleQR = () => setDisplayMyQR(!displayQR);
+  const handleSandyImage = () => {
+    if (originalImage) {
+      playSound();
+      setImage(require("./assets/img/sandycacheteada.png"));
+    } else {
+      setImage(require("./assets/img/sandynormal.png"));
+    }
+    setOriginalImage(!originalImage);
+  };
+
+  useEffect(() => {
+    const loadSound = async () => {
+      try {
+        const { sound } = await Audio.Sound.createAsync(
+          require("./sounds/cachetada.mp3")
+        );
+        setSound(sound);
+      } catch (error) {
+        console.error("Error al cargar el sonido:", error);
+      }
+    };
+
+    loadSound();
+  }, []);
+
+  const playSound = async () => {
+    try {
+      if (sound != null) {
+        await sound.replayAsync();
+      }
+    } catch (error) {
+      console.error("Error al reproducir el sonido:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ExpoStatusBar style="auto" />
@@ -45,6 +88,11 @@ export default function App() {
                 size={180}
                 value="https://github.com/DiegoOchoa2005/pgl-portfolio-app"
               />
+            </View>
+            <View style={styles.cuteDraw}>
+              <TouchableOpacity onPress={handleSandyImage} activeOpacity={1}>
+                <Image style={styles.sandyImage} source={sandyImage} />
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -148,12 +196,21 @@ const styles = StyleSheet.create({
   },
   repoContainer: {
     display: "flex",
-    backgroundColor: "blue",
-    height: "100%",
-    width: "100%",
+    backgroundColor: "pink",
+    height: screenHeigth,
+    width: screenWidth,
+    zIndex: -1,
   },
   qrCode: {
-    paddingTop: 30,
     alignItems: "center",
+    alignContent: "center",
+    marginTop: 80,
+  },
+  cuteDraw: {
+    alignItems: "center",
+  },
+  sandyImage: {
+    height: 520,
+    width: screenWidth,
   },
 });
