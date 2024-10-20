@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet,
   Image,
-  ScrollView,
 } from "react-native";
 
 export type CardProps = {
@@ -54,19 +53,17 @@ export const Card = ({
         >
           {title}
         </Text>
-        <ScrollView>
-          <Text
-            style={[
-              styles.cardDescription,
-              {
-                color: textColorSecondary,
-                backgroundColor: backgroundColorTertiary,
-              },
-            ]}
-          >
-            {description}
-          </Text>
-        </ScrollView>
+        <Text
+          style={[
+            styles.cardDescription,
+            {
+              color: textColorSecondary,
+              backgroundColor: backgroundColorTertiary,
+            },
+          ]}
+        >
+          {description}
+        </Text>
       </View>
     </View>
   );

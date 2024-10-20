@@ -85,16 +85,16 @@ export default function App() {
     <View style={styles.container}>
       <ExpoStatusBar style="auto" />
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>My Portfolio App</Text>
+        <Text style={styles.headerTitle}>Mi Portafolio</Text>
         <View style={styles.headerButtons}>
           <Pressable
             style={styles.pressableButton}
             onPress={() => setDisplayMyQR(false)}
           >
-            <Text style={styles.pressableText}>Mi info</Text>
+            <Text style={styles.pressableText}>Información</Text>
           </Pressable>
           <Pressable style={styles.pressableButton} onPress={() => handleQR()}>
-            <Text style={styles.pressableText}>Mi Repo</Text>
+            <Text style={styles.pressableText}>Repositorio</Text>
           </Pressable>
           <Switch
             style={styles.switch}
@@ -126,10 +126,9 @@ export default function App() {
         <View style={styles.body}>
           <View style={styles.bodyCard}>
             <Card
-              avatar={require("./assets/SofyanAmrabat.jpg")}
-              title="Descripción sobre mí!"
-              description="Soy profe y me gusta mi trabajo aunque a veces me de por enrevesar
-              prácticas para mis queridos alumnos"
+              avatar={require("./assets/img/avatar.webp")}
+              title="Acerca de mi persona"
+              description="Soy un estudiante de informática que le gusta romperse la cabeza para lograr lo que quiere, sin tener tiempo para dormir pero si para dibujar."
               backgroundColorPrimary={
                 styles.itemBackgroundSecondary.backgroundColor
               }
@@ -145,7 +144,7 @@ export default function App() {
             />
           </View>
           <View style={styles.boxTitle}>
-            <Text style={styles.boxTitleInfo}>cosas que me gustan mucho:</Text>
+            <Text style={styles.boxTitleInfo}>Me gustan cosas como:</Text>
           </View>
           <View style={styles.boxList}>
             <FlatList

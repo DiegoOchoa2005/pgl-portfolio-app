@@ -2,40 +2,44 @@ import { BoxProps } from "../components/Box";
 
 export const boxes: BoxProps[] = [
   {
-    description: "Jugar",
-    image: require("../assets/SofyanAmrabat.jpg"),
+    description: "!Programar",
+    image: require("../assets/img/boxImages/pythonIcon.webp"),
   },
   {
-    description: "A",
-    image: require("../assets/SofyanAmrabat.jpg"),
+    description: "Anime",
+    image: require("../assets/img/boxImages/luffy.jpg"),
   },
   {
-    description: "A",
-    image: require("../assets/SofyanAmrabat.jpg"),
+    description: "Videojuegos offline",
+    image: require("../assets/img/boxImages/undertaleIcon.png"),
   },
   {
-    description: "A",
-    image: require("../assets/SofyanAmrabat.jpg"),
+    description: "Dibujar por 8 horas",
+    image: require("../assets/img/boxImages/sandyIcon.png"),
   },
   {
-    description: "A",
-    image: require("../assets/SofyanAmrabat.jpg"),
+    description: "Flamear en LoL",
+    image: require("../assets/img/boxImages/akali.png"),
   },
   {
-    description: "A",
-    image: require("../assets/SofyanAmrabat.jpg"),
+    description: "Crear historias y comícs",
+    image: require("../assets/img/boxImages/comicIcon.png"),
   },
   {
-    description: "A",
-    image: require("../assets/SofyanAmrabat.jpg"),
+    description: "Hurones Albinos",
+    image: require("../assets/img/boxImages/huronIcon.webp"),
   },
   {
-    description: "A",
-    image: require("../assets/SofyanAmrabat.jpg"),
+    description: "Katarina lover",
+    image: require("../assets/img/boxImages/katarinaIcon.png"),
   },
   {
-    description: "A",
-    image: require("../assets/SofyanAmrabat.jpg"),
+    description: "Musica 24/7",
+    image: require("../assets/img/boxImages/listeningMusicIcon.jpeg"),
+  },
+  {
+    description: "Salir a pasear\n(Opcional)",
+    image: require("../assets/img/boxImages/playingVideogames.png"),
   },
 ];
 
