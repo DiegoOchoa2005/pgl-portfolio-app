@@ -12,6 +12,7 @@ import {
   Image,
   TouchableOpacity,
   useColorScheme,
+  Switch,
 } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { Card } from "./components/Card";
@@ -26,6 +27,7 @@ export default function App() {
   const currentColorScheme = useColorScheme();
   const [colorScheme, setColorScheme] = useState(currentColorScheme);
   const [styles, setStyles] = useState(getStyles(colorScheme || "light"));
+  const [checked, setChecked] = useState(false);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [displayQR, setDisplayMyQR] = useState(false);
   const [originalImage, setOriginalImage] = useState(true);
@@ -94,6 +96,14 @@ export default function App() {
           <Pressable style={styles.pressableButton} onPress={() => handleQR()}>
             <Text style={styles.pressableText}>Mi Repo</Text>
           </Pressable>
+          <Switch
+            style={styles.switch}
+            value={checked}
+            onValueChange={(value) => {
+              setChecked(value);
+              toggleColorScheme();
+            }}
+          />
         </View>
       </View>
       {displayQR ? (
@@ -183,6 +193,11 @@ const getStyles = (colorScheme: string) => {
       color: getTheme.textPrimary,
       fontWeight: "bold",
       textTransform: "uppercase",
+    },
+
+    switch: {
+      marginVertical: "auto",
+      height: 20,
     },
     body: {
       display: "flex",
