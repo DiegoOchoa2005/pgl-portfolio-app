@@ -1,134 +1,168 @@
-import { useState } from 'react';
-import { Button, Pressable, ScrollView, StyleSheet, Text, View, Image } from 'react-native';
-import QRCode from 'react-native-qrcode-svg';
-
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import {
+  Pressable,
+  Text,
+  View,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  useColorScheme,
+  Switch,
+} from "react-native";
+import QRCode from "react-native-qrcode-svg";
+import { Card } from "./components/Card";
+import Box from "./components/Box";
+import { boxes } from "./data/BoxData";
+import { Audio } from "expo-av";
+import { getStyles } from "./styles/ThemeManager";
 export default function App() {
-  const [displayMyQR, setDisplayMyQR] = useState(true);
+  const currentColorScheme = useColorScheme();
+  const [colorScheme, setColorScheme] = useState(currentColorScheme);
+  const [styles, setStyles] = useState(getStyles(colorScheme || "light"));
+  const [checked, setChecked] = useState(false);
+  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const [displayQR, setDisplayMyQR] = useState(false);
+  const [originalImage, setOriginalImage] = useState(true);
+  const [sandyImage, setImage] = useState(
+    require("./assets/img/sandynormal.png")
+  );
+  const handleQR = () => setDisplayMyQR(!displayQR);
+
+  const handleSandyImage = () => {
+    if (originalImage) {
+      playSound();
+      setImage(require("./assets/img/sandycacheteada.png"));
+    } else {
+      setImage(require("./assets/img/sandynormal.png"));
+    }
+    setOriginalImage(!originalImage);
+  };
+
+  const toggleColorScheme = () => {
+    setColorScheme((prevColorScheme) =>
+      prevColorScheme === "light" ? "dark" : "light"
+    );
+  };
+
+  useEffect(() => {
+    setStyles(getStyles(colorScheme || "light"));
+  }, [colorScheme]);
+
+  useEffect(() => {
+    const loadSound = async () => {
+      try {
+        const { sound } = await Audio.Sound.createAsync(
+          require("./sounds/cachetada.mp3")
+        );
+        setSound(sound);
+      } catch (error) {
+        console.error("Error al cargar el sonido:", error);
+      }
+    };
+
+    loadSound();
+  }, []);
+
+  const playSound = async () => {
+    try {
+      if (sound != null) {
+        await sound.replayAsync();
+      }
+    } catch (error) {
+      console.error("Error al reproducir el sonido:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.topContainer}>
-        <Text style={styles.firsttoprowContainer}>My Portfolio App</Text>
-        <View style={styles.rowTopSecondContainer}>
-        <Pressable style={styles.buttonruta} onPress={() => setDisplayMyQR(true)}>
-          <Text style={{...{color: 'white', fontWeight: 'bold', textTransform: 'uppercase'}, ...styles.shadoxboxing}}>Mi info</Text>
-        </Pressable>
-        <Button onPress={() => setDisplayMyQR(false)} title="Mi Repo" color="light-gray" accessibilityLabel='Un botón pal QR' />
+      <ExpoStatusBar style="auto" />
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Mi Portafolio</Text>
+        <View style={styles.headerButtons}>
+          <Pressable
+            style={styles.pressableButton}
+            onPress={() => setDisplayMyQR(false)}
+          >
+            <Text style={styles.pressableText}>Información</Text>
+          </Pressable>
+          <Pressable style={styles.pressableButton} onPress={() => handleQR()}>
+            <Text style={styles.pressableText}>Repositorio</Text>
+          </Pressable>
+          <Switch
+            style={styles.switch}
+            value={checked}
+            onValueChange={(value) => {
+              setChecked(value);
+              toggleColorScheme();
+            }}
+          />
         </View>
       </View>
-      {
-        displayMyQR ?
-          <View style={styles.bodystails}>
-            <View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image style={styles.avatar} source={require('./assets/SofyanAmrabat.jpg')}></Image>
-              <View style={{margin: 10, backgroundColor: 'lightgray', padding: 10, borderRadius: 10, width: '70%'}}>
-            <Text style={{textAlign:'center', fontWeight: '700', fontSize: 20}}>
-            Descripción sobre mí!
-            </Text>
-            <Text>
-              Soy profe y me gusta mi trabajo aunque a veces me de por enrevesar prácticas para mis queridos alumnos
-            </Text>
-              </View>
-              </View>
-            <Text style= {{color: 'beriblak', fontWeight: "900", textTransform: 'capitalize', fontSize: 20, textAlign: 'center'}}>
-              cosas que me gustan mucho:
-            </Text>
-            <ScrollView style={{padding: 10}}>
-              <Text style={styles.cosasQmeGustanMuxoEstails}>Salir a pasear</Text>
-          <Text style={styles.cosasQmeGustanMuxoEstails}>Senderismo</Text>
-            <Text style={styles.cosasQmeGustanMuxoEstails}>Ir a la playita</Text>
-            <Text style={styles.cosasQmeGustanMuxoEstails}>Domingos de misa</Text>
-              <Text style={styles.cosasQmeGustanMuxoEstails}>La guitarrita</Text>
-            <Text style={styles.cosasQmeGustanMuxoEstails}>El monte con lluvia</Text>
-              <Text style={styles.cosasQmeGustanMuxoEstails}>Viajar</Text>
-     <Text style={styles.cosasQmeGustanMuxoEstails}>Música variadita</Text>
-              <Text style={styles.cosasQmeGustanMuxoEstails}>Anime</Text>
-        <Text style={styles.cosasQmeGustanMuxoEstails}>Ducharme</Text>
-              <Text style={styles.cosasQmeGustanMuxoEstails}>Videojuegos</Text>
-      <Text style={styles.cosasQmeGustanMuxoEstails}>Ir de cenar romántica</Text>
-            </ScrollView>
+      {displayQR ? (
+        <View style={styles.body}>
+          <View style={styles.repoContainer}>
+            <View style={styles.qrCode}>
+              <QRCode
+                size={180}
+                value="https://github.com/DiegoOchoa2005/pgl-portfolio-app"
+                logo={require("./assets/img/sandyLogo.png")}
+                logoSize={30}
+              />
+            </View>
+            <View style={styles.cuteDraw}>
+              <TouchableOpacity onPress={handleSandyImage} activeOpacity={1}>
+                <Image style={styles.sandyImage} source={sandyImage} />
+              </TouchableOpacity>
             </View>
           </View>
-          :
-              <View style={styles.bodystails}>
-            <View style={styles.CentrarcodigoQR}>
-          <QRCode value="https://github.com/adhernea" />
-            </View>
-              </View>
-      }
+        </View>
+      ) : (
+        <View style={styles.body}>
+          <View style={styles.bodyCard}>
+            <Card
+              avatar={require("./assets/img/avatar.webp")}
+              title="Acerca de mi persona"
+              description="Soy un estudiante de informática que le gusta romperse la cabeza para lograr lo que quiere, sin tener tiempo para dormir pero si para dibujar."
+              backgroundColorPrimary={
+                styles.itemBackgroundSecondary.backgroundColor
+              }
+              backgroundColorSecondary={
+                styles.itemBackgroundPrimary.backgroundColor
+              }
+              backgroundColorTertiary={
+                styles.itemBackgroundTertiary.backgroundColor
+              }
+              borderColor={styles.itemBackgroundPrimary.borderColor}
+              textColorPrimary={styles.itemFontPrimary.color}
+              textColorSecondary={styles.itemFontSecondary.color}
+            />
+          </View>
+          <View style={styles.boxTitle}>
+            <Text style={styles.boxTitleInfo}>Me gustan cosas como:</Text>
+          </View>
+          <View style={styles.boxList}>
+            <FlatList
+              data={boxes}
+              renderItem={({ item }) => (
+                <Box
+                  description={item.description}
+                  image={item.image}
+                  borderColor={styles.itemBackgroundPrimary.borderColor}
+                  backgroundColorPrimary={
+                    styles.itemBackgroundSecondary.backgroundColor
+                  }
+                  textColorPrimary={styles.itemFontPrimary.color}
+                  backgroundColorSecondary={
+                    styles.itemBackgroundTertiary.backgroundColor
+                  }
+                />
+              )}
+              keyExtractor={(_item, index: number) => `${index}`}
+            />
+          </View>
+        </View>
+      )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  topContainer: {
-    height: '15%',
-    paddingTop: 50,
-    width: '100%',
-  },
-  firsttoprowContainer: {
-    backgroundColor: 'gray',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    textAlignVertical: 'center',
-    fontSize: 30,
-  },
-  rowTopSecondContainer: {
-    flexDirection: 'row',
-    backgroundColor: 'darkgray',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  buttonruta: {
-    width:'50%',
-  },
-  bodystails: {
-    width: '100%',
-    borderWidth: 2,
-    borderColor: 'black',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: '85%'
-  },
-  avatar: {
-    height: 90,
-    width: 90,
-    borderRadius: 100
-  },
-  cosasQmeGustanMuxoEstails: {
-    borderColor: 'black',
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    padding: 20,
-    color: 'darkred',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontStyle: 'italic',
-    fontSize: 16,
-    backgroundColor: 'silver'
-  },
-  CentrarcodigoQR: {
-    justifyContent: 'center',
-    borderWidth: 1,
-    width: '100%',
-    height: '100%',
-    alignItems: 'center'
-  },
-  shadoxboxing: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 7,
-    },
-    shadowOpacity: 0.43,
-    shadowRadius: 9.51,
-
-    elevation: 15,
-  }
-});

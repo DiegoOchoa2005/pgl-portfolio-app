@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "expo": "^51.0.37",
+    "expo-av": "~14.0.7",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
     "react-native": "^0.74.5",
     "react-native-qrcode-svg": "^6.2.0",
+    "react-native-sound-player": "^0.14.3",
     "react-native-svg": "^13.2.0"
   },
   "devDependencies": {
