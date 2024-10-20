@@ -6,19 +6,42 @@ import {
   Text,
   View,
 } from "react-native";
-import { COLORS } from "../styles/Color";
 
 export type BoxProps = {
   description: string;
   image: ImageSourcePropType;
+  borderColor?: string;
+  backgroundColorPrimary?: string;
+  backgroundColorSecondary?: string;
+  textColorPrimary?: string;
+  textColorSecondary?: string;
 };
 
-const Box = ({ description, image }: BoxProps) => {
+const Box = ({
+  description,
+  image,
+  borderColor,
+  backgroundColorPrimary,
+  backgroundColorSecondary,
+  textColorPrimary,
+}: BoxProps) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.boxInfo}>
-        <View style={styles.boxTextContainer}>
-          <Text style={styles.boxText}>{description}</Text>
+    <View style={[styles.container, { borderColor: borderColor }]}>
+      <View
+        style={[styles.boxInfo, { backgroundColor: backgroundColorPrimary }]}
+      >
+        <View
+          style={[
+            styles.boxTextContainer,
+            {
+              backgroundColor: backgroundColorSecondary,
+              borderColor: borderColor,
+            },
+          ]}
+        >
+          <Text style={[styles.boxText, { color: textColorPrimary }]}>
+            {description}
+          </Text>
         </View>
         <View style={styles.boxImage}>
           <Image source={image} style={styles.img} />
@@ -34,17 +57,18 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     justifyContent: "space-between",
-    borderColor: COLORS.borderPrimary,
     borderStyle: "dashed",
     borderWidth: 1,
     margin: 4,
     marginHorizontal: 8,
-    backgroundColor: COLORS.backgroundColor,
   },
   boxTextContainer: {
     padding: 10,
     marginLeft: "auto",
     maxWidth: 250,
+    borderWidth: 1,
+    borderStyle: "dotted",
+    borderRadius: 15,
   },
   boxText: {
     fontWeight: "bold",
@@ -55,7 +79,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    backgroundColor: COLORS.backgroundColor,
     padding: 10,
   },
   boxImage: {
@@ -67,17 +90,5 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 10,
-  },
-  cosasQmeGustanMuxoEstails: {
-    borderColor: "black",
-    borderWidth: 1,
-    borderStyle: "dashed",
-    padding: 20,
-    color: "darkred",
-    textAlign: "center",
-    fontWeight: "bold",
-    fontStyle: "italic",
-    fontSize: 16,
-    backgroundColor: "silver",
   },
 });
