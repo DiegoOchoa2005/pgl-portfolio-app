@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
   boxTextContainer: {
     padding: 10,
     marginLeft: "auto",
-    maxWidth: 250,
+    width: "auto",
+    maxWidth: 260,
     borderWidth: 1,
     borderStyle: "dotted",
     borderRadius: 15,
