@@ -113,6 +113,8 @@ export default function App() {
               <QRCode
                 size={180}
                 value="https://github.com/DiegoOchoa2005/pgl-portfolio-app"
+                logo={require("./assets/img/sandyLogo.png")}
+                logoSize={30}
               />
             </View>
             <View style={styles.cuteDraw}>
