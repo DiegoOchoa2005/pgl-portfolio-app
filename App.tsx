@@ -120,6 +120,10 @@ export default function App() {
               title="Descripción sobre mí!"
               description="Soy profe y me gusta mi trabajo aunque a veces me de por enrevesar
               prácticas para mis queridos alumnos"
+              backgroundColor={styles.cardBackground.backgroundColor}
+              borderColor={styles.cardBackground.borderColor}
+              textColorPrimary={styles.cardFontPrimary.color}
+              textColorSecondary={styles.cardFontSecondary.color}
             />
           </View>
           <View style={styles.boxTitle}>
@@ -193,6 +197,16 @@ const getStyles = (colorScheme: string) => {
 
     bodyCard: {
       marginTop: 25,
+    },
+    cardBackground: {
+      backgroundColor: getTheme.backgroundSecondary,
+      borderColor: getTheme.borderColor,
+    },
+    cardFontPrimary: {
+      color: getTheme.textPrimary,
+    },
+    cardFontSecondary: {
+      color: getTheme.textSecondary,
     },
     boxList: {
       width: 380,
